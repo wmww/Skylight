@@ -1,0 +1,100 @@
+[git commit -m "hay"]
+git[commit -m 'hay, this is a test']
+
+use git
+use blender for /home/william/blender/bin
+
+git add .
+a = "this is a test"
+
+git commit -m {a}
+
+add 7 & 4
+
+cd["hay"]
+
+echo "hello world"
+
+var a = 8
+
+a = 12
+
+echo $a
+
+a = 12
+
+for i in 0..8 {
+	println "hay, waddup?"
+	
+}
+
+if true
+{
+	
+}
+
+echo [add 3 [a]]
+
+func doStuff {
+	echo abc > blah/abc.txt
+	var myStr = "/tmp/abc.txt"
+	echo abc > myStr
+	echo abc > mySr # typo causes it to got to 'mySr' file, this is not good
+	echo abc > $myStr
+	echo abc >> myStr
+}
+
+func (dub:a, int:b)::abc dub:c
+{
+	print "\[a] \$b " $c
+}
+
+func abc a[int] b {}
+
+func abc a
+{
+	while true
+	{
+		if a == 8
+		{
+			
+		}
+	}
+	
+	return 7
+}
+
+for i in 1, 2, 12, 24...
+{
+	yo $i \n
+}
+
+func Birthday name:string age:int
+{
+	return new name, age
+}
+
+func Birthday::itr amount:int
+{
+	age += amount
+}
+
+foo = Birthday "William" 19
+
+foo.itr 4
+
+print foo.age
+
+func add a b
+{
+	return a + b
+}
+
+print add 7 9
+print add 5.0 12
+print add "abc" "xyz"
+
+echo "the number is \[2 + 2]"
+
+decltype(8) a = 3
+

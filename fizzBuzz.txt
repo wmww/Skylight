@@ -1,0 +1,25 @@
+func fizzBuzz int:low int:high
+{
+	for i in 0..12
+	{
+		if i % 5 == 0 && i % 3 == 0
+		{
+			echo FizzBuzz
+		}
+		elif i % 5 == 0
+		{
+			echo Fizz
+		}
+		elif i % 3 ==0
+		{
+			echo Buzz
+		}
+		else
+		{
+			echo $i
+		}
+	}
+}
+
+fizzBuzz 0 12
+
