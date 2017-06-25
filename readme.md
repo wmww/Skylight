@@ -119,6 +119,53 @@ echo [12 + 2.9] [sin(3.2)]
 # output: 14.9 0.0558215
 ```
 
+## Pointers and Such
+Pointers are always hard. I think I have a decent system.
+
+### Shared Pointers
+The default pointer in Skylight is a shared pointer, which uses reference counting for memory management. To make one, simply use the %ptr% keyword before the thing you want a pointer to. The space for that thing will be heap allocated, it will be copied there and a shared pointer will be returned.
+%%%
+{
+	# allocate an int pointer to 9
+	var a = ptr 9
+	
+	# copy pointer
+	var b = a
+	
+	# manually dereference
+	var c = *a
+	
+	a = 12
+	
+	echo b is $b, c is $c
+	
+	# output: b is 12, c is 9
+}
+# a and b both go out of scope, so the memory is freed
+%%%
+
+### References
+References are a way of efficiently passing stack stack and heap values around. The trade off is the memory referred to by references can never be freed while they exist.
+%%%
+
+var x = &5
+
+func take_ref(a: &int) {
+	echo $a
+	
+	# a new int is actually allocated, and will be freed at the end of the scope
+	# the 3 int is not freed yet
+	a = 7
+	
+	# this would cause a compile error, because references can not escape the current scope
+	# x = a
+}
+
+# a 3 is allocated and will be freed once the function returns
+take_ref(3)
+
+%%%
+
 ## Functions
 In Skylight, type syntax in functions is optional. This is because all functions are lazily compiled. They only get compiled if/when they are called and only for whatever types are calling them. They are implemented similarly to templates and generics in other languages.
 
@@ -143,24 +190,26 @@ func my_name(a: int, b: dub || string, c: array(int), d) {
 ### Left Hand Input
 %%%
 # declaring a function that takes left hand input
-func (a, b: int)addAll(c, d) {
+func (a, b: int)add_all(c, d) {
 	return a + b + c + d
 }
 
 # calling the function
-let val = (12.2, 13).addAll(2, 1.7)
+let val = (12.2, 13).add_all(2, 1.7)
 %%%
 
-### "Classes"
+### Type Semantics
+The only time there is explicit type syntax in Skylight is in function headers. The names you use in them are simply the names of functions that return the type you want. Confused? here is an example:
+%%%
+func int_dub_tuple
+%%%
 
+## OOP
+Skylight is not an object oriented language, but you can leverage object oriented syntax if that's what your program needs.
 ...
 
-
-Skylight is not an object oriented language, but you can leverage object oriented syntax if that's what your program needs.
-
-### 
-
 ## Polys
+...
 
 ### Overview
 A poly is a value that can hold multiple different types. It is the only way to do polymorphism in Skylight. They are similar in implementation to Rust and Swift enums, in that they have several possible alternatives they can be and for each alternative there may or may not be an associated value with a different type.
