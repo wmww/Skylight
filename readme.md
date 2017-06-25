@@ -131,28 +131,6 @@ echo [12 + 2.9] [sin(3.2)]
 # output: 14.9 0.0558215
 %%%
 
-# Coming Soon
-More content is coming soon to this spec. Pleas give feedback on what is here and I'll get on adding more. Future content includes 
-
-## Two Types of Lines
-Skylight has two types of lines, commands and statements. Commands are like BASH commands and statements are like statements in traditional languages. There are also expressions, which are a subset of statements. The difference between expressions and other statements is that expressions return a value and can be nested. Here are some examples of each:
-%%%
-# commands:
-ls
-ls -A -R
-git commit -m "bug fixes"
-if (ls *) >> (grep)
-print abc
-# statements (not expressions):
-var a = 12
-func concat(a, b, c) {return a.str() + b.str() + c.str()}
-a = 24 + 2
-
-# statemnts (are expressions):
-24 + 2
-concat(12, "xyz", true)
-34.str()
-%%%
-Statements and expressions are parsed with the same rules, but commands are pared differently. Every argument to a command is treated as a string litetral. Whether a line is a statements or command is determined by the first token in the line. If it is a keyword like func, or while, or if it is a known token previously declared with func or var then the line is treated as a statement. If it is a command declared with the cmd keyword, then the line is treated as a command. If it is unknown the line will generate an error.
-
+## Coming Soon
+More content is coming soon to this spec. Pleas give feedback on what is here and I'll get on adding more.
 
