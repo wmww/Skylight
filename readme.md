@@ -108,11 +108,12 @@ func my_name(a: int, b: dub || string, c: array(int), d) {
 
 ## Commands
 A special type of line is a command, which is like a BASH command. A line is processed as a command if it is __NOT__ any of the following patterns:
-* Starts with keyword (`var`, `func`, `if`, etc.)
-* Starts with identifier followed by `=` (can have white space)
-* Starts with identifier followed by `(` (with no white space in between)
-* Starts with identifier followed by `.` (with no white space in between)
-* Maybe more in the future
+* Starts with keyword (`var`, `func`, `if`, etc.).
+* Starts with identifier followed by `=` (can have white space).
+* Starts with identifier followed by `(` (with no white space in between).
+* Starts with identifier followed by `.` (with no white space in between).
+* Maybe more in the future.
+
 As you can see, any useful statement in Skylight will start as one of those, so if a line doesn't it may be parsed as a command. Commands are parsed as a list of white space separated string literals at compile time. For example, the command `ls -A "../dir with spaces"` is parsed as `runCommand("ls", "-A", "../dir with spaces")`
 
 ### variables in commands
