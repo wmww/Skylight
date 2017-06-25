@@ -4,8 +4,14 @@
 ## Intro
 Skylight is a shell and programming language currently being designed. It's syntax takes inspiration from the C language family, Rust and particularly Swift. It also can be run as a shell and supports simple BASH-like syntax to run commands.
 
-## Purpose of This Document
-This document will be the complete language specification. My last language, [Pinecone](https://pinecone-lang.herokuapp.com/index.html) was designed and implemented in parallel with little external feedback. While this suited the goals of that project in some ways, it was not ideal in others. This time around I will design the language, get feedback and iterate on the design several times before I begin implementation. This document on GitHub is the single source of truth of the current specification of the language. If you want to give feedback, please join the discussion on [this reddit thread that I forgot to link so it won't work](https://http.cat/404).
+### Purpose of This Document
+This document will be the complete language specification. For now, I'm keeping it short to save your time and mine. If something isn't specified, just assume its the same as any other modern C-style language (it is assumed you are familiar with at least one). If something is really unclear, ask me or open and issue and I will fix it.
+
+### Future Plan
+My last language, [Pinecone](https://pinecone-lang.herokuapp.com/index.html) was designed and implemented in parallel with little external feedback. While this suited the goals of that project in some ways, it was not ideal in others. This time around I will design the language, get feedback and iterate on the design several times before I begin implementation. This document on GitHub is the single source of truth of the current specification of the language. Once I get to a design I'm happy with and others are excited about, I will begin implementation. I have some cool ideas about bootstrapping a self compiler, but now I'm getting ahead of myself.
+
+### Give Feedback!
+If you have questions or suggestions, send them my way. Don't worry if they are too vague, too specific, or too unusual. The worst that could happen is I tell you your a fucking idiot with terrible ideas. If you have me on social media, message me there or email me at w​​​​ilco​ze ​@​ gm​​​​ai​l​.​c​om otherwise.
 
 ## Guiding Principles
 
@@ -88,7 +94,35 @@ for i in 0..10 {
 }
 ```
 
-### Functions
+## Commands
+A special type of line is a command, which is like a BASH command. A line is processed as a command if it is __NOT__ any of the following patterns:
+* Starts with keyword (`var`, `func`, `if`, etc.).
+* Starts with identifier followed by `=` (can have white space).
+* Starts with identifier followed by `(` (with no white space in between).
+* Starts with identifier followed by `.` (with no white space in between).
+* Maybe more in the future.
+
+As you can see, any useful statement in Skylight will start as one of those, so if a line doesn't it may be parsed as a command. Commands are parsed as a list of white space separated string literals at compile time. For example, the command `ls -A "../dir with spaces"` is parsed as `run_command("ls", "-A", "../dir with spaces")`
+
+### variables in commands
+You can drop the values of variables into commands, just prepend the name with `$`.
+```
+var a = 12
+echo a is $a
+# output: a is 12
+```
+
+### expressions in commands
+You can also use expressions in commands. To do so, wrap them in `[]`.
+```
+echo [12 + 2.9] [sin(3.2)]
+# output: 14.9 0.0558215
+```
+
+## Functions
+In Skylight, type syntax in functions is optional. This is because all functions are lazily compiled. They only get compiled if/when they are called and only for whatever types are calling them. They are implemented similarly to templates and generics in other languages.
+
+### Basic Usage
 ```
 func my_name(a: int, b: dub || string, c: array(int), d) {
 	# a is of type int
@@ -106,30 +140,30 @@ func my_name(a: int, b: dub || string, c: array(int), d) {
 }
 ```
 
-## Commands
-A special type of line is a command, which is like a BASH command. A line is processed as a command if it is __NOT__ any of the following patterns:
-* Starts with keyword (`var`, `func`, `if`, etc.).
-* Starts with identifier followed by `=` (can have white space).
-* Starts with identifier followed by `(` (with no white space in between).
-* Starts with identifier followed by `.` (with no white space in between).
-* Maybe more in the future.
+### Left Hand Input
+%%%
+# declaring a function that takes left hand input
+func (a, b: int)addAll(c, d) {
+	return a + b + c + d
+}
 
-As you can see, any useful statement in Skylight will start as one of those, so if a line doesn't it may be parsed as a command. Commands are parsed as a list of white space separated string literals at compile time. For example, the command `ls -A "../dir with spaces"` is parsed as `runCommand("ls", "-A", "../dir with spaces")`
+# calling the function
+let val = (12.2, 13).addAll(2, 1.7)
+%%%
 
-### variables in commands
-You can drop the values of variables into commands, just prepend the name with `$`.
-```
-var a = 12
-echo a is $a
-# output: a is 12
-```
+### "Classes"
 
-### expressions in commands
-You can also use expressions in commands. To do so, wrap them in `[]`.
-```
-echo [12 + 2.9] [sin(3.2)]
-# output: 14.9 0.0558215
-```
+...
+
+
+Skylight is not an object oriented language, but you can leverage object oriented syntax if that's what your program needs.
+
+### 
+
+## Polys
+
+### Overview
+A poly is a value that can hold multiple different types. It is the only way to do polymorphism in Skylight. They are similar in implementation to Rust and Swift enums, in that they have several possible alternatives they can be and for each alternative there may or may not be an associated value with a different type.
 
 ## Coming Soon
 More content is coming soon to this spec. Please give feedback on what is here and I'll get on adding more.
