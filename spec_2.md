@@ -38,9 +38,23 @@ it can go on for several lines
 # declare a variable that holds integers 
 var a = 6
 
+# change the value of the variable
+a = a + 1
+
 # declare an imitable variable that holds strings
 # (a variable that's value need not be known at compile time but can only be set once)
 let b = "Skylight"
+
+# this will cause a compile time error
+b = "abc"
+
+# does not cause an error because new variable of same name is created
+var b = false
+%%%
+
+### Tuples
+%%%
+let c = (7, "abc", true)
 %%%
 
 ### If/If Else
@@ -74,6 +88,51 @@ for i in 0..10 {
 	# ...
 }
 %%%
+
+### Functions
+%%%
+func my_name(a: int, b: dub || string, c: array(int), d) {
+	# a is of type int
+	# b is of type dub or string
+	# c is of type array of ints
+	# d can be of any type
+	
+	# function is created like a C++ template, so there is no runtime cost to flexible typing
+	
+	# ...
+	
+	return true
+	
+	# return type is implicit
+}
+%%%
+
+## Commands
+A special type of line is a command, which is like a BASH command. A line is processed as a command if it is __NOT__ any of the following patterns:
+* Starts with keyword (%var%, %func%, %if%, etc.)
+* Starts with identifier followed by %=% (can have white space)
+* Starts with identifier followed by %(% (with no white space in between)
+* Starts with identifier followed by %.% (with no white space in between)
+* Maybe more in the future
+As you can see, any useful statement in Skylight will start as one of those, so if a line doesn't it may be parsed as a command. Commands are parsed as a list of white space separated string literals at compile time. For example, the command %ls -A "../dir with spaces"% is parsed as %runCommand("ls", "-A", "../dir with spaces")%
+
+### variables in commands
+You can drop the values of variables into commands, just prepend the name with %$%.
+%%%
+var a = 12
+echo a is $a
+# output: a is 12
+%%%
+
+### expressions in commands
+You can also use expressions in commands. To do so, wrap them in %[]%.
+%%%
+echo [12 + 2.9] [sin(3.2)]
+# output: 14.9 0.0558215
+%%%
+
+# Coming Soon
+More content is coming soon to this spec. Pleas give feedback on what is here and I'll get on adding more. Future content includes 
 
 ## Two Types of Lines
 Skylight has two types of lines, commands and statements. Commands are like BASH commands and statements are like statements in traditional languages. There are also expressions, which are a subset of statements. The difference between expressions and other statements is that expressions return a value and can be nested. Here are some examples of each:
