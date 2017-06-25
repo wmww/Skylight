@@ -98,3 +98,79 @@ echo "the number is \[2 + 2]"
 
 decltype(8) a = 3
 
+multi a = null
+
+if b == 3 {
+	a = 3
+}
+
+if c && a is int {
+	
+	print(a)
+}
+
+switch a {
+case int
+	print(a + 1)
+	
+case null
+	print("it is null")
+	
+default
+}
+
+multi a
+a.my_int = 9
+a.my_name = "hay"
+
+print(a.my_int ?? 0)
+
+var b = a
+
+func Vec2(xIn, yIn) {
+	return (x: xIn, y: yIn)
+}
+
+func Vec3(xIn, yIn, zIn) {
+	return (x: xIn, y: yIn, z: zIn)
+}
+
+func &Vec2::dist() {
+
+	return sqrt(x*x + y*y)
+}
+
+func &Vec3::dist() {
+	return sqrt(x*x + y*y + z*z)
+}
+
+multi vec
+
+let inStrs = input().split()
+
+if inStrs.len == 2 {
+	opt vec::v2 = Vec2(dub(inStrs[0]), dub(inStrs[1]))
+} elif inStrs.len == 3 {
+	opt vec::v3 = Vec3(dub(inStrs[0]), dub(inStrs[1]), dub(inStrs[1]))
+} else {
+	vec.error = void
+}
+
+if vec is error {ohshit}
+
+print(vec::v2)
+
+if vec isn't error {
+	print("vec is v3")
+	print(vec.dist())
+}
+
+if a != b {
+
+}
+
+if a == b == c {
+	
+}
+
+
