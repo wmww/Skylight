@@ -59,7 +59,8 @@ var b = false
 
 ### Tuples
 ```
-let c = (7, "abc", true)
+let y = (5.2, false)
+let x = (a: 7, b: "abc", the_bool: true)
 ```
 
 ### If/If Else
@@ -201,19 +202,65 @@ let val = (12.2, 13).add_all(2, 1.7)
 ### Type Semantics
 The only time there is explicit type syntax in Skylight is in function headers. The names you use in them are simply the names of functions that return the type you want. Confused? here is an example:
 %%%
-func int_dub_tuple
+func int_dub_tuple(a: int, b: dub) {
+	return (i: a, d: b)
+}
+
+func use_tuple(val: int_dub_tuple) {
+	echo int is [val.i], dub is [val.d]
+}
+
+# type error
+use_tuple(4, 7.9)
+
+# works
+use_tuple(int_dub_tuple(4, 7.9))
 %%%
 
 ## OOP
 Skylight is not an object oriented language, but you can leverage object oriented syntax if that's what your program needs.
-...
+
+### Constructors
+To start a class, simply write a constructor for it. Specifically write a function that returns a named tuple, or a pointer to a named tuple if you want your class to be pass by reference by default.
+%%%
+func cat(name: string, color: string, age: int) {
+	if age < 0 {
+		echo "cat is of invalid age $age"
+		ohshit # abourt execution
+	}
+	
+	return (
+		name: name,
+		color: color,
+		age: age,
+	)
+}
+%%%
+
+### Methods
+You can now put methods on classes by making functions that take a reference to the class as left hand input.
+%%%
+func (me: &cat)speak() {
+	echo [me.name] says \"meow\"
+}
+%%%
+Now lets use it
+%%%
+var my_cat = cat("Felix", "black" 6)
+my_cat.speak()
+%%%
+There is a shortcut to make methods that gives implicit access to members and automatically makes input a reference
+%%%
+func cat.speak() {
+	echo $name says \"meow\"
+}
+%%%
 
 ## Polys
-...
 
 ### Overview
 A poly is a value that can hold multiple different types. It is the only way to do polymorphism in Skylight. They are similar in implementation to Rust and Swift enums, in that they have several possible alternatives they can be and for each alternative there may or may not be an associated value with a different type.
 
 ## Coming Soon
-More content is coming soon to this spec. Please give feedback on what is here and I'll get on adding more.
+More content is coming soon to this spec, especially about Polys. Please give feedback on what is here and I'll get on adding more.
 
