@@ -124,8 +124,8 @@ echo [12 + 2.9] [sin(3.2)]
 Pointers are always hard. I think I have a decent system.
 
 ### Shared Pointers
-The default pointer in Skylight is a shared pointer, which uses reference counting for memory management. To make one, simply use the %ptr% keyword before the thing you want a pointer to. The space for that thing will be heap allocated, it will be copied there and a shared pointer will be returned.
-%%%
+The default pointer in Skylight is a shared pointer, which uses reference counting for memory management. To make one, simply use the `ptr` keyword before the thing you want a pointer to. The space for that thing will be heap allocated, it will be copied there and a shared pointer will be returned.
+```
 {
 	# allocate an int pointer to 9
 	var a = ptr 9
@@ -143,11 +143,11 @@ The default pointer in Skylight is a shared pointer, which uses reference counti
 	# output: b is 12, c is 9
 }
 # a and b both go out of scope, so the memory is freed
-%%%
+```
 
 ### References
 References are a way of efficiently passing stack stack and heap values around. The trade off is the memory referred to by references can never be freed while they exist.
-%%%
+```
 
 var x = &5
 
@@ -165,7 +165,7 @@ func take_ref(a: &int) {
 # a 3 is allocated and will be freed once the function returns
 take_ref(3)
 
-%%%
+```
 
 ## Functions
 In Skylight, type syntax in functions is optional. This is because all functions are lazily compiled. They only get compiled if/when they are called and only for whatever types are calling them. They are implemented similarly to templates and generics in other languages.
@@ -189,7 +189,7 @@ func my_name(a: int, b: dub || string, c: array(int), d) {
 ```
 
 ### Left Hand Input
-%%%
+```
 # declaring a function that takes left hand input
 func (a, b: int)add_all(c, d) {
 	return a + b + c + d
@@ -197,11 +197,11 @@ func (a, b: int)add_all(c, d) {
 
 # calling the function
 let val = (12.2, 13).add_all(2, 1.7)
-%%%
+```
 
 ### Type Semantics
 The only time there is explicit type syntax in Skylight is in function headers. The names you use in them are simply the names of functions that return the type you want. Confused? here is an example:
-%%%
+```
 func int_dub_tuple(a: int, b: dub) {
 	return (i: a, d: b)
 }
@@ -215,14 +215,14 @@ use_tuple(4, 7.9)
 
 # works
 use_tuple(int_dub_tuple(4, 7.9))
-%%%
+```
 
 ## OOP
 Skylight is not an object oriented language, but you can leverage object oriented syntax if that's what your program needs.
 
 ### Constructors
 To start a class, simply write a constructor for it. Specifically write a function that returns a named tuple, or a pointer to a named tuple if you want your class to be pass by reference by default.
-%%%
+```
 func cat(name: string, color: string, age: int) {
 	if age < 0 {
 		echo "cat is of invalid age $age"
@@ -235,26 +235,26 @@ func cat(name: string, color: string, age: int) {
 		age: age,
 	)
 }
-%%%
+```
 
 ### Methods
 You can now put methods on classes by making functions that take a reference to the class as left hand input.
-%%%
+```
 func (me: &cat)speak() {
 	echo [me.name] says \"meow\"
 }
-%%%
+```
 Now lets use it
-%%%
+```
 var my_cat = cat("Felix", "black" 6)
 my_cat.speak()
-%%%
+```
 There is a shortcut to make methods that gives implicit access to members and automatically makes input a reference
-%%%
+```
 func cat.speak() {
 	echo $name says \"meow\"
 }
-%%%
+```
 
 ## Polys
 
