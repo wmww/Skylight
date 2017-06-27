@@ -19,7 +19,7 @@ If you have questions or suggestions, send them my way. Don't worry if they are 
 Skylight will be easy to read, write and learn. This means using syntax developers already know where applicable, and inventing new patterns where needed for reasons of simplicity or clarity. Creating functions and data structures should have little syntax overhead.
 
 ### Versatile
-Skylight will be used as both a shell, a scripting language and a serious programming language. It should be suited for a wide verity of uses, including large scale applications. It should not sacrifice tools needed for any context without good reason.
+Skylight will be used as both a shell, a scripting language and a serious programming language. It should be suited for a wide veriaty of uses, including large scale applications. It should not sacrifice tools needed for any context without good reason.
 
 ### Fast
 Or, more precisely, optionally fast. It will be possible to run Skylight code one line at a time, interpret it or compile it for improved performance. As such, Skylight will be type safe. Don't worry, this doesn't make it harder. It actually makes it easier because the compiler will catch type errors.
@@ -40,13 +40,13 @@ it can go on for several lines
 
 ### Variables
 ```
-# declare a variable that holds integers 
+# declare a variable that holds integers
 var a = 6
 
 # change the value of the variable
 a = a + 1
 
-# declare an imitable variable that holds strings
+# declare an imutable variable that holds strings
 # (a variable that's value need not be known at compile time but can only be set once)
 let b = "Skylight"
 
@@ -80,7 +80,7 @@ if a == b {
 ```
 loop {
 	# endless loop until break
-	
+
 	if should_stop {
 		break;
 	}
@@ -128,36 +128,36 @@ The default pointer in Skylight is a shared pointer, which uses reference counti
 ```
 {
 	# allocate an int pointer to 9
-	var a = ptr 9
-	
+	var a = box 9
+
 	# copy pointer
 	var b = a
-	
+
 	# manually dereference
-	var c = *a
-	
+	var c = ^a
+
 	a = 12
-	
+
 	echo b is $b, c is $c
-	
+
 	# output: b is 12, c is 9
 }
 # a and b both go out of scope, so the memory is freed
 ```
 
 ### References
-References are a way of efficiently passing stack stack and heap values around. The trade off is the memory referred to by references can never be freed while they exist.
+References are a way of efficiently passing stack and heap values around. The trade off is the memory referred to by references can never be freed while they exist.
 ```
 
 var x = &5
 
 func take_ref(a: &int) {
 	echo $a
-	
+
 	# a new int is actually allocated, and will be freed at the end of the scope
 	# the 3 int is not freed yet
 	a = 7
-	
+
 	# this would cause a compile error, because references can not escape the current scope
 	# x = a
 }
@@ -187,7 +187,6 @@ func my_name(a: int, b: dub || string, c: array(int), d) {
 	# return type is implicit
 }
 ```
-
 ### Left Hand Input
 ```
 # declaring a function that takes left hand input
@@ -221,20 +220,25 @@ use_tuple(int_dub_tuple(4, 7.9))
 Skylight is not an object oriented language, but you can leverage object oriented syntax if that's what your program needs.
 
 ### Constructors
-To start a class, simply write a constructor for it. Specifically write a function that returns a named tuple, or a pointer to a named tuple if you want your class to be pass by reference by default.
+To start a class, simply write a constructor for it. Specifically write a function that returns a named tuple, or a pointer to a named tuple if you want your class to be pass by reference by default. If you want the function's name to be usable as a type (as you normally do for classes) you use the `construct` keyword.
 ```
-func cat(name: string, color: string, age: int) {
+construct cat(name: string, color: string, age: int) {
 	if age < 0 {
 		echo "cat is of invalid age $age"
 		ohshit # abourt execution
 	}
-	
+
 	return (
 		name: name,
 		color: color,
 		age: age,
 	)
 }
+```
+Now lets use it
+```
+var my_cat = cat("Felix", "black" 6)
+my_cat.speak()
 ```
 
 ### Methods
@@ -244,23 +248,15 @@ func (me: &cat)speak() {
 	echo [me.name] says \"meow\"
 }
 ```
-Now lets use it
-```
-var my_cat = cat("Felix", "black" 6)
-my_cat.speak()
-```
-There is a shortcut to make methods that gives implicit access to members and automatically makes input a reference
+There is a shortcut to make methods that gives implicit access to members and automatically makes input a reference.
 ```
 func cat.speak() {
 	echo $name says \"meow\"
 }
-```
+``` 
 
 ## Polys
-
-### Overview
-A poly is a value that can hold multiple different types. It is the only way to do polymorphism in Skylight. They are similar in implementation to Rust and Swift enums, in that they have several possible alternatives they can be and for each alternative there may or may not be an associated value with a different type.
+A poly is a value that can hold multiple different types. They are the only way to do polymorphism in Skylight. They are similar in implementation to Rust and Swift enums, in that they have several possible alternatives they can be and for each alternative there may or may not be an associated value with a different type. The big difference is that the options a poly can be does not have to be declared explicitly.
 
 ## Coming Soon
 More content is coming soon to this spec, especially about Polys. Please give feedback on what is here and I'll get on adding more.
-
