@@ -54,6 +54,7 @@ let b = "Skylight"
 b = "abc"
 
 # does not cause an error because new variable of same name is created
+# this is known as shadowing
 var b = false
 ```
 
@@ -91,6 +92,9 @@ while condition {
 }
 
 for i in 0..10 {
+	# start..end syntax is inclusive on for the start and exclusive for the end
+	# if start >= end not iterations will be run
+	
 	# ...
 }
 ```
@@ -120,51 +124,56 @@ echo [12 + 2.9] [sin(3.2)]
 # output: 14.9 0.0558215
 ```
 
-## Pointers and Such
-Pointers are always hard. I think I have a decent system.
+## References
+Pointers and references are always hard. I think I have a decent system.
 
-### Shared Pointers
-The default pointer in Skylight is a shared pointer, which uses reference counting for memory management. To make one, simply use the `ptr` keyword before the thing you want a pointer to. The space for that thing will be heap allocated, it will be copied there and a shared pointer will be returned.
+### Shared References
+The default reference in Skylight is a shared reference, which uses ARC for memory management. To make one, simply use the `ref` keyword before the thing you want a reference to. The space for that thing will be heap allocated, it will be copied there and a shared reference will be returned.
 ```
 {
-	# allocate an int pointer to 9
-	var a = box 9
-
-	# copy pointer
+	# allocate an int reference to 9
+	var a = ref 9
+	
+	# copy reference (not data)
 	var b = a
-
-	# manually dereference
-	var c = ^a
-
+	
+	# manually dereference and copy data
+	var c = *a
+	
+	# change the value a refers to
 	a = 12
-
+	
 	echo b is $b, c is $c
-
 	# output: b is 12, c is 9
 }
-# a and b both go out of scope, so the memory is freed
+# a and b both go out of scope, so the reference count drops to 0 and the memory is freed
 ```
 
-### References
-References are a way of efficiently passing stack and heap values around. The trade off is the memory referred to by references can never be freed while they exist.
+### Caged References
+Caged References are a way of efficiently passing stack and heap values around. The trade off is the memory referred to by caged references can never be freed while they exist and caged references can never escape the current scope.
 ```
-
+# an anonymous global variable with the initial value of 5 is created
+# the global variable x is set to refer to 5
 var x = &5
 
 func take_ref(a: &int) {
 	echo $a
-
-	# a new int is actually allocated, and will be freed at the end of the scope
-	# the 3 int is not freed yet
-	a = 7
-
+	# output: 3
+	
+	# this would cause a compile time error
+	# the values in references are immutable unless they are sent in with &
+	# a = 7
+	
 	# this would cause a compile error, because references can not escape the current scope
 	# x = a
+	
+	# this works because it is copying values
+	# in fact the * before the x can be omitted and the line will act the same
+	*x = *a
 }
 
-# a 3 is allocated and will be freed once the function returns
+# 3 is places in an anonymous stack variable
 take_ref(3)
-
 ```
 
 ## Functions
