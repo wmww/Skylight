@@ -39,6 +39,7 @@ it can go on for several lines
 ```
 
 ### Variables
+A variable is a place to store data that can only be known when the program runs
 ```
 # declare a variable that holds integers
 var a = 6
@@ -46,22 +47,29 @@ var a = 6
 # change the value of the variable
 a = a + 1
 
-# declare an imutable variable that holds strings
+# declare an immutable variable that holds strings
 # (a variable that's value need not be known at compile time but can only be set once)
 let b = "Skylight"
 
-# this will cause a compile time error
-b = "abc"
+# this would cause a compile time error, because changing an immutable variable is not allowed
+#b = "abc"
 
 # does not cause an error because new variable of same name is created
 # this is known as shadowing
+# note that the new variable can be a var or a let, and it can be of any type
 var b = false
 ```
 
 ### Tuples
+Tuples are variables that hold multiple values. The types of the values may be different. Names are optional for each value. Unlike other languages where tuples are an afterthought, in Skylight they are the only method of creating complex data structures.
 ```
-let y = (5.2, false)
-let x = (a: 7, b: "abc", the_bool: true)
+# create tuples
+let c = (5.2, false)
+var d = (a: 7, b: "abc", the_bool: true)
+
+# use tuples
+print c.1 ", " d.b
+# output is 'false, abc'
 ```
 
 ### If/If Else
@@ -77,7 +85,8 @@ if a == b {
 }
 ```
 
-### Loops
+### Loop
+There are several ways of doing loops in Skylight, the most interesting of which is the simple `loop {}` syntax. This is equivalent to `while true {}`, but make the intention to break out of the loop from the inside explicit.
 ```
 loop {
 	# endless loop until break
@@ -93,71 +102,51 @@ while condition {
 
 for i in 0..10 {
 	# start..end syntax is inclusive on for the start and exclusive for the end
-	# if start >= end not iterations will be run
+	# if start >= end no iterations will be run
 	
 	# ...
 }
 ```
 
+### Function
+```
+func my_name() {
+	# ...
+	return something
+}
+
+func another_one(arg0, arg1) {
+	# ...
+	# or no return
+}
+```
+
 ## Commands
-A special type of line is a command, which is like a BASH command. A line is processed as a command if it is __NOT__ any of the following patterns:
-* Starts with keyword (`var`, `func`, `if`, etc.).
-* Starts with identifier followed by `=` (can have white space).
-* Starts with identifier followed by `(` (with no white space in between).
-* Starts with identifier followed by `.` (with no white space in between).
-* Maybe more in the future.
+A special type of expression is a command, which is like a BASH command. An expression is processed as a command if starts with a `$`, or you are running in implicit command mode and the first identifier in the expression is not known in the program. Commands are parsed as a list of white space separated string literals at compile time. For example, the command `ls -A "../dir with spaces"` is parsed as `run_command("ls", "-A", "../dir with spaces")`
 
-As you can see, any useful statement in Skylight will start as one of those, so if a line doesn't it may be parsed as a command. Commands are parsed as a list of white space separated string literals at compile time. For example, the command `ls -A "../dir with spaces"` is parsed as `run_command("ls", "-A", "../dir with spaces")`
+### Implicit Command Mode
+Implicit command mode attempts to run commands whenever an expression starts with an identifier that isn't known. It is useful for running Skylight as an interactive shell, where starting every line with `$` may be annoying. Using it for scripts is discouraged because it causes less errors to be caught at compile time, makes code less readable and stops the grammar from being context free. There will be some mechanism for switching it on and off.
 
-### variables in commands
-You can drop the values of variables into commands, just prepend the name with `$`.
+### Expressions in Commands
+You can use a variable or expression in a command by wrapping it with `[]`
 ```
-var a = 12
-echo a is $a
-# output: a is 12
-```
-
-### expressions in commands
-You can also use expressions in commands. To do so, wrap them in `[]`.
-```
-echo [12 + 2.9] [sin(3.2)]
-# output: 14.9 0.0558215
+let a = 7
+echo a is [a], [12 + 2.9] [sin(3.2)]
+# output: a is 7, 14.9 0.0558215
 ```
 
 ## References
-Pointers and references are always hard. I think I have a decent system.
-
-### Shared References
-The default reference in Skylight is a shared reference, which uses ARC for memory management. To make one, simply use the `ref` keyword before the thing you want a reference to. The space for that thing will be heap allocated, it will be copied there and a shared reference will be returned.
-```
-{
-	# allocate an int reference to 9
-	var a = ref 9
-	
-	# copy reference (not data)
-	var b = a
-	
-	# manually dereference and copy data
-	var c = *a
-	
-	# change the value a refers to
-	a = 12
-	
-	echo b is $b, c is $c
-	# output: b is 12, c is 9
-}
-# a and b both go out of scope, so the reference count drops to 0 and the memory is freed
-```
+Primitives and tuples are pass-by-value by default. There are to types of references you can use, each for a specific purpose.
 
 ### Caged References
-Caged References are a way of efficiently passing stack and heap values around. The trade off is the memory referred to by caged references can never be freed while they exist and caged references can never escape the current scope.
+Sometimes you want to move values around efficiently without the hassle of reference counting or memory management. Caged references are great for this. The value they refer to can be on the stack or the heap, and is guaranteed to exist as long as the reference is around. That means if you send a caged reference into a function, the item will not be destroyed under any circumstances until the function returns. This also means that it must be clear to the compiler when a caged reference will go out of scope, so no value accessible outside of the current scope may be set to a caged reference, or it could 'escape'.
 ```
 # an anonymous global variable with the initial value of 5 is created
-# the global variable x is set to refer to 5
+# the global variable x is set to refer to the 5 holding global
 var x = &5
 
 func take_ref(a: &int) {
-	echo $a
+	print a
 	# output: 3
 	
 	# this would cause a compile time error
@@ -167,21 +156,47 @@ func take_ref(a: &int) {
 	# this would cause a compile error, because references can not escape the current scope
 	# x = a
 	
-	# this works because it is copying values
-	# in fact the * before the x can be omitted and the line will act the same
-	*x = *a
+	# this works because it is manually dereferencing and copying values
+	# in fact the ^ before the x or the a can be omitted and the line will act the same
+	^x = ^a
 }
 
-# 3 is places in an anonymous stack variable
+# 3 is placed in an anonymous stack variable
 take_ref(3)
+
+# with this version of the call, the operations that modify the value a would work
+# because 3 is converted to a reference explicitly
+take_ref(&3)
 ```
 
-## Functions
+### Shared References
+When you need more flexibility then a caged reference, you use a shared reference. Shared references have values stored on the heap and use automatic reference counting for memory management. To make one, simply use the `ref` keyword before the thing you want a reference to. The space for that thing will be heap allocated, it will be copied there and a shared reference will be returned.
+```
+{
+	# allocate an int reference to 9
+	var a = ref 9
+	
+	# copy reference (not data)
+	var b = a
+	
+	# manually dereference and copy data
+	var c = ^a
+	
+	# change the value a refers to
+	a = 12
+	
+	print "b is " b ", c is " c
+	# output: b is 12, c is 9
+}
+# a and b both go out of scope, so the reference count drops to 0 and the memory is freed
+```
+
+## Advanced Functions
 In Skylight, type syntax in functions is optional. This is because all functions are lazily compiled. They only get compiled if/when they are called and only for whatever types are calling them. They are implemented similarly to templates and generics in other languages.
 
-### Basic Usage
+### Declaration
 ```
-func my_name(a: int, b: dub || string, c: array(int), d) {
+func my_name(a: int, b: dub || string, c: int.array, d) -> bool {
 	# a is of type int
 	# b is of type dub or string
 	# c is of type array of ints
@@ -192,8 +207,7 @@ func my_name(a: int, b: dub || string, c: array(int), d) {
 	# ...
 	
 	return true
-	
-	# return type is implicit
+	# return type may be implicit or explicit (sometimes, such as recursive functions, it must be explicit)
 }
 ```
 ### Left Hand Input
@@ -262,10 +276,20 @@ There is a shortcut to make methods that gives implicit access to members and au
 func cat.speak() {
 	echo $name says \"meow\"
 }
-``` 
+```
 
 ## Polys
-A poly is a value that can hold multiple different types. They are the only way to do polymorphism in Skylight. They are similar in implementation to Rust and Swift enums, in that they have several possible alternatives they can be and for each alternative there may or may not be an associated value with a different type. The big difference is that the options a poly can be does not have to be declared explicitly.
+A poly is a value that can hold multiple different types. They are how polymorphism and enums are done in Skylight. They are similar to Rust and Swift enums, in that they have several possible alternatives, and for each alternative there may or may not be an associated value of any type. The big difference is that the alternatives for a poly are not declared explicitly at the declaration.
+
+### Creation
+```
+poly animal = cat()
+alt animal::dog = 2
+alt animal = cat()
+
+animal := dog = 
+var animal
+```
 
 ## Coming Soon
 More content is coming soon to this spec, especially about Polys. Please give feedback on what is here and I'll get on adding more.

@@ -48,7 +48,7 @@ func (dub:a, int:b)::abc dub:c
 {
 	print "\[a] \$b " $c
 }
-
+v
 func abc a[int] b {}
 
 func abc a
@@ -173,4 +173,45 @@ if a == b == c {
 	
 }
 
+type cat
 
+func [cat].make(a: int, b: {int}) -> cat {
+	
+}
+
+cat.make()
+
+construct cat() { return (
+	# ...
+)}
+
+func take_int_array(in: int.array) {
+	
+}
+
+my_map = map(from: string, to: int)
+my_map = (from: string, to: int).map
+my_map = map(
+	("hay", 1),
+	("yo", 43),
+	("waddup", -4),
+)
+
+func take_string_int_map(in: (from: string, to: int).map) {
+	
+	
+}
+
+let a = (0, 209, 32, 54, 9)...
+
+a[2] = 8
+
+a[..] = a[..] * 2
+
+print(a[..])
+
+a[var i] = i + 4
+
+func ~int.nan() {
+	
+}
