@@ -222,14 +222,14 @@ let val = (12.2, 13).add_all(2, 1.7)
 ```
 
 ### Type Semantics
-The only time there is explicit type syntax in Skylight is in function headers. The names you use in them are simply the names of functions that return the type you want. Confused? here is an example:
+The only time there is explicit type syntax in Skylight is in function headers. To create a type, use the `construct` keyword instead of `func` and the function name will be usable to denote the type that function returns.
 ```
-func int_dub_tuple(a: int, b: dub) {
+construct int_dub_tuple(a: int, b: dub) {
 	return (i: a, d: b)
 }
 
 func use_tuple(val: int_dub_tuple) {
-	echo int is [val.i], dub is [val.d]
+	print "int is " val.i ", dub is " val.d
 }
 
 # type error
@@ -260,22 +260,37 @@ construct cat(name: string, color: string, age: int) {
 ```
 Now lets use it
 ```
-var my_cat = cat("Felix", "black" 6)
+var my_cat = cat("Felix", "black", 6)
 my_cat.speak()
 ```
 
 ### Methods
 You can now put methods on classes by making functions that take a reference to the class as left hand input.
 ```
-func (me: &cat)speak() {
-	echo [me.name] says \"meow\"
+func (me: &cat) speak() {
+	print me.name " says \"meow\""
 }
 ```
 There is a shortcut to make methods that gives implicit access to members and automatically makes input a reference.
 ```
 func cat.speak() {
-	echo $name says \"meow\"
+	print name " says \"meow\""
 }
+```
+
+### Static Methods
+To make a function be callable from a type, not an instance use a `~` before the type
+```
+func (a) is_it_cat() {
+	return false
+}
+
+func ~cat.is_it_cat() {
+	return true
+}
+
+print int.is_it_cat() # false
+print cat.is_it_cat() # true
 ```
 
 ## Polys
@@ -283,12 +298,23 @@ A poly is a value that can hold multiple different types. They are how polymorph
 
 ### Creation
 ```
-poly animal = cat()
-alt animal::dog = 2
-alt animal = cat()
+# create a poly with the name xyz and one alt. That alt is named (implicitly) int and holds an int
+poly xyz = 3
 
-animal := dog = 
-var animal
+# create an alt, 'abc' that deosn't hold any value and set xyz to it
+alt xyz := abc
+
+# create an alt cat_val that holds a cat but don't set xyz to it
+alt xyz::cat_val: cat
+
+# set xyz to 'cat' (alt is automatically selected based on type)
+xyz = cat("Felix", "black", 6)
+
+# w can use all the alts of xyz, but you can not add new alts to w
+var w = xyz
+
+# you can now add alts to v again
+poly v = w
 ```
 
 ## Coming Soon
