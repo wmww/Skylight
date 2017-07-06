@@ -1,5 +1,7 @@
 #include <iostream>
 
+#define var auto
+
 #define print(arg) std::cout << arg << std::endl
 
 #define func template<typename T0 = void, typename T1 = void, typename T2 = void, typename T3 = void> auto
@@ -14,3 +16,7 @@
 #define _1 FUNC_1_ARGS(
 #define _2 FUNC_2_ARGS(
 #define _3 FUNC_3_ARGS(
+
+
+#define TUPLE_ELEM(e_name, e_val) decltype(e_val) e_name = e_val;
+#define tuple(name0, val0, name1, val1) [&]()->auto{struct anon_struct{TUPLE_ELEM(name0, val0) TUPLE_ELEM(name1, val1)}; return anon_struct();}()
