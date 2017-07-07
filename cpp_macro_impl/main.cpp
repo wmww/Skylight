@@ -12,13 +12,21 @@ abc(args a, b, c, d, e, t) {
 int main() {
 	print("hay");
 	
-	abc(1, 4, 3, 4, 89, 54);
+	//abc(1, 4, 3, 4, 89, 54);
+	
+	var my_tup = tuple(a, 43, b, 23);
+	
+	my_tup.a = 12;
+	
+	print(my_tup.a);
 	
 	//var a = tuple(a, 54, dsklgs, true);
 	
 	//print(a.true);
 	
 	//print(ARG_COUNT(dfsd, sdfds, sfsd, sf));
+	
+	return 0;
 }
 
 /*
