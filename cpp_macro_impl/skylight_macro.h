@@ -11,9 +11,31 @@
 
 #define ARG_COUNT_INTENAL(_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,N,...)N
 
+// includes
+
+#include <vector>
+
 // mscl
 
 #define var auto
+#define let const auto
+
+#define loop while true
+
+inline auto range(int low, int high) {
+	std::vector<int> out;
+	for (int i = low; i < high; i++)
+		out.push_back(i);
+	return out;
+}
+
+inline auto range(int high) {
+	return range(0, high);
+}
+
+#define for for (auto
+#define do )
+#define in :
 
 #define print(arg) std::cout << arg << std::endl
 
@@ -55,8 +77,8 @@
 
 #define TUPLE_ELEM_0()
 #define TUPLE_ELEM_2(elem_name, elem_val) decltype(elem_val) elem_name = elem_val;
-#define TUPLE_ELEM_4(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_8(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_4( e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_8( e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define TUPLE_ELEM_10(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define TUPLE_ELEM_12(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define TUPLE_ELEM_14(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
@@ -66,7 +88,7 @@
 #define TUPLE_ELEM_22(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define TUPLE_ELEM_24(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 
-#define tuple(...) [&]() -> auto { struct anon_struct{CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)}; return anon_struct();}()
+#define tuple(...) [&]() -> auto {struct anon_struct{CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)}; return anon_struct();}()
 
 //#define TUPLE_ELEM(e_name, e_val) decltype(e_val) e_name = e_val;
 
