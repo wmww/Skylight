@@ -1,7 +1,9 @@
 #ifndef SKYLIGHT_MACRO_H
 #define SKYLIGHT_MACRO_H
 
+//includes
 #include <iostream>
+#include <memory>
 
 // helpers
 
@@ -42,6 +44,8 @@ inline auto range(int high) {
 
 struct null_t {};
 extern null_t null; // defined in str.cpp
+
+#define END int main() {run(); return 0;}
 
 // functions
 
@@ -96,6 +100,8 @@ extern null_t null; // defined in str.cpp
 
 #define tuple(...) [&]() -> auto {struct anon_struct{CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)}; return anon_struct();}()
 
-#define END int main() {run(); return 0;}
+// pointers
+
+#define ref(a) std::shared_ptr<decltype(a)>(&(*(new decltype(a)) = a))
 
 #endif // SKYLIGHT_MACRO_H

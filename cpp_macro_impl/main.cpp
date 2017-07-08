@@ -3,12 +3,13 @@
 
 func run() {
 	
+	var a = ref(9);
+	var b = tuple(abc, 8, xyz, false);
+	var c = ref(b);
 	
+	*a = 2;
 	
-	for (auto i in range(0, 10))
-	{
-		print(i);
-	}
+	print(*a);
 }
 
 END
