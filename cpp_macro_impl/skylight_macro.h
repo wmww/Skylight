@@ -102,6 +102,23 @@ extern null_t null; // defined in str.cpp
 
 // pointers
 
-#define ref(a) std::shared_ptr<decltype(a)>(&(*(new decltype(a)) = a))
+template <typename T>
+inline auto ref(T a) {
+	auto ptr = new T;
+	*ptr = a;
+	return std::shared_ptr<T>(ptr);
+}
+
+template <typename T>
+inline auto raw_ptr(T a) {
+	auto out = new T;
+	*out = a;
+	return out;
+}
+
+template <typename T>
+inline auto del(T a) {
+	delete a;
+}
 
 #endif // SKYLIGHT_MACRO_H
