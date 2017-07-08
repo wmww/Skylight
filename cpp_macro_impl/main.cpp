@@ -1,13 +1,14 @@
 
 #include "skylight_macro.h"
 
-int main() {
+func run() {
 	
-	var i = 0;
-	for i in range(0, 10) do
+	
+	
+	for (auto i in range(0, 10))
 	{
 		print(i);
 	}
-	
-	return 0;
 }
+
+END

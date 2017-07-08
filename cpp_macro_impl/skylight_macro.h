@@ -1,3 +1,6 @@
+#ifndef SKYLIGHT_MACRO_H
+#define SKYLIGHT_MACRO_H
+
 #include <iostream>
 
 // helpers
@@ -33,11 +36,12 @@ inline auto range(int high) {
 	return range(0, high);
 }
 
-#define for for (auto
-#define do )
 #define in :
 
 #define print(arg) std::cout << arg << std::endl
+
+struct null_t {};
+extern null_t null; // defined in str.cpp
 
 // functions
 
@@ -54,6 +58,8 @@ inline auto range(int high) {
 	typename T_10 = void, \
 	typename T_11 = void, \
 	typename T_12 = void> auto
+
+#define construct func
 
 #define FUNC_ARGS_0(...) )
 #define FUNC_ARGS_1(arg) T_1 arg)
@@ -90,16 +96,6 @@ inline auto range(int high) {
 
 #define tuple(...) [&]() -> auto {struct anon_struct{CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)}; return anon_struct();}()
 
-//#define TUPLE_ELEM(e_name, e_val) decltype(e_val) e_name = e_val;
+#define END int main() {run(); return 0;}
 
-//#define TUPLE_INSIDE(first_name, first_val, ...) TUPLE_ELEM(first_name, first_val) TUPLE_INSIDE(__VA_ARGS__)
-
-//#define tuple(...) [&]() -> auto { struct anon_struct{TUPLE_INSIDE(__VA_ARGS__)}; return anon_struct();}()
-
-//#define tuple(name0, val0) [&]()->auto{struct anon_struct{ \
-	TUPLE_ELEM(name0, val0) \
-	}; return anon_struct();}()
-//#define tuple(name0, val0, name1, val1) [&]()->auto{struct anon_struct{ \
-	TUPLE_ELEM(name0, val0) \
-	TUPLE_ELEM(name1, val1) \
-	}; return anon_struct();}()
+#endif // SKYLIGHT_MACRO_H
