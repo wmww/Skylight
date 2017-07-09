@@ -1,5 +1,6 @@
 
 #include "skylight_macro.h"
+#include "str.cpp"
 
 func abc(args a) {
 	print(*a);
@@ -18,6 +19,8 @@ func run() {
 	
 	var jdfskgf = 4;
 	abc(&jdfskgf);
+	
+	var my_str = str("hay");
 }
 
 END

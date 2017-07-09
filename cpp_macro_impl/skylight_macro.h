@@ -52,6 +52,7 @@ extern null_t null; // defined in str.cpp
 // functions
 
 #define func template< \
+	typename T_0  = void, \
 	typename T_1  = void, \
 	typename T_2  = void, \
 	typename T_3  = void, \
@@ -68,7 +69,7 @@ extern null_t null; // defined in str.cpp
 #define construct func
 
 #define FUNC_ARGS_0(...) )
-#define FUNC_ARGS_1(arg) T_1 arg)
+#define FUNC_ARGS_1(arg) T_0 arg)
 #define FUNC_ARGS_2( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_3( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_4( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
