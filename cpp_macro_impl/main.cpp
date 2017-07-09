@@ -14,6 +14,8 @@ func run() {
 	
 	print(*a);
 	
+	print((*b).abc);
+	
 	var jdfskgf = 4;
 	abc(&jdfskgf);
 }

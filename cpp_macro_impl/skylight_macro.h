@@ -1,9 +1,13 @@
 #ifndef SKYLIGHT_MACRO_H
 #define SKYLIGHT_MACRO_H
 
+
 //includes
+
 #include <iostream>
 #include <memory>
+#include <vector>
+
 
 // helpers
 
@@ -14,11 +18,8 @@
 
 #define IS_EMPTY(...) ARG_COUNT_INTENAL(dummy,##__VA_ARGS__,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,SOME_ARGS,NO_ARGS)
 
-#define ARG_COUNT_INTENAL(_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,N,...)N
+#define ARG_COUNT_INTENAL(_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,N,...) N
 
-// includes
-
-#include <vector>
 
 // mscl
 
@@ -46,6 +47,7 @@ struct null_t {};
 extern null_t null; // defined in str.cpp
 
 #define END int main() {run(); return 0;}
+
 
 // functions
 
@@ -83,22 +85,39 @@ extern null_t null; // defined in str.cpp
 
 #define FUNC_ARGS(...) CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 
+
 // tuples
 
-#define TUPLE_ELEM_0()
-#define TUPLE_ELEM_2(elem_name, elem_val) decltype(elem_val) elem_name = elem_val;
-#define TUPLE_ELEM_4( e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_8( e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_10(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_12(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_14(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_16(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_18(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_20(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_22(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define TUPLE_ELEM_24(e_name, e_val, ...) decltype(e_val) e_name=e_val; CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_0()
+#define TUPLE_ELEM_A_2( e_name, e_val) decltype(e_val) e_name;
+#define TUPLE_ELEM_A_4( e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_6( e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_8( e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_10(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_12(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_14(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_16(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_18(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_20(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_22(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_A_24(e_name, e_val, ...) decltype(e_val) e_name; CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 
-#define tuple(...) [&]() -> auto {struct anon_struct{CONCAT(TUPLE_ELEM, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)}; return anon_struct();}()
+#define TUPLE_ELEM_B_0()
+#define TUPLE_ELEM_B_2( e_name, e_val) out.e_name = e_val;
+#define TUPLE_ELEM_B_4( e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_6( e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_8( e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_10(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_12(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_14(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_16(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_18(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_20(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_22(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define TUPLE_ELEM_B_24(e_name, e_val, ...) out.e_name = e_val; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+
+#define tuple(...) [&]() -> auto {struct anon_struct{CONCAT(TUPLE_ELEM_A, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)}; anon_struct out; CONCAT(TUPLE_ELEM_B, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__); return out;}()
+
 
 // pointers
 
@@ -114,6 +133,11 @@ inline auto raw_ptr(T a) {
 	auto out = new T;
 	*out = a;
 	return out;
+}
+
+template <typename T>
+inline auto null_raw_ptr(T a) {
+	return (T*)nullptr;
 }
 
 template <typename T>
