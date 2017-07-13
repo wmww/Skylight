@@ -20,6 +20,11 @@
 
 #define ARG_COUNT_INTENAL(_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,N,...) N
 
+#define DOES_NOT_NOT_HAVE_PEREN(...) HAS_PEREN
+#define DOES_NOT_HAS_PEREN_FUNC_FUNC(...) NO_PEREN
+#define DOES_NOT_HAS_PEREN_FUNC DOES_NOT_HAS_PEREN_FUNC_FUNC(
+#define HAS_PEREN_FUNC(...) NOT_HAVE_PEREN(
+#define CHECK_FOR_PEREN(in) CONCAT(DOES_NOT, HAS_PEREN_FUNC in) )
 
 // mscl
 
@@ -68,12 +73,21 @@ extern null_t null; // defined in str.cpp
 
 #define construct func
 
+#define FUNC_ELEM_NO_PEREN(name, type) type name
+#define FUNC_ELEM_HAS_PEREN(arg, dummy_type) FUNC_ELEM_NO_PEREN arg
+
 #define FUNC_ARGS_0(...) )
-#define FUNC_ARGS_1(arg) T_0 arg)
-#define FUNC_ARGS_2( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_3( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_4( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_5( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+//#define FUNC_ARGS_1(arg) T_0 arg)
+#define FUNC_ARGS_1( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))))
+#define FUNC_ARGS_2( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_3( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_4( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_5( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+
+//#define FUNC_ARGS_2( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+//#define FUNC_ARGS_3( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+//#define FUNC_ARGS_4( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+//#define FUNC_ARGS_5( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_6( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_7( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_8( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)

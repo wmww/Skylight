@@ -21,3 +21,13 @@ construct str(args chr_ptr) {
 	memcpy(data, chr_ptr, len);
 	return _str((char*)data, (int)len);
 }
+
+/*
+operator (left: str) == (right: str)
+{
+	
+}
+
+bool operator==(get_type(str()))
+*/
+

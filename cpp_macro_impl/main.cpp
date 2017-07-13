@@ -2,25 +2,19 @@
 #include "skylight_macro.h"
 #include "str.cpp"
 
-func abc(args a) {
+func abc(args z, (a, int *), (b, double), c) {
 	print(*a);
 }
 
 func run() {
 	
-	var a = ref(9);
-	var b = ref(tuple(abc, 8, xyz, false));
+	var str_0 = str("hay");
+	var str_1 = str("hay");
 	
-	*a = 2;
-	
-	print(*a);
-	
-	print((*b).abc);
-	
-	var jdfskgf = 4;
-	abc(&jdfskgf);
-	
-	var my_str = str("hay");
+	var does_match = true; //str_1 == str_0;
+	print(does_match);
 }
 
 END
+
+//CHECK_FOR_PEREN(abc)
