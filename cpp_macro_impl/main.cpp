@@ -2,12 +2,8 @@
 #include "skylight_macro.h"
 #include "str.cpp"
 
-func abc(args z, (a, int *), (b, double), c) {
-	print(*a);
-}
-
-func run() {
-	
+func run()
+{
 	var str_0 = str("hay");
 	var str_1 = str("hay");
 	
@@ -16,5 +12,3 @@ func run() {
 }
 
 END
-
-//CHECK_FOR_PEREN(abc)

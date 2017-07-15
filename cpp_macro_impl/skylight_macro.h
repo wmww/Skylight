@@ -46,12 +46,22 @@ inline auto range(int high) {
 
 #define in :
 
-#define print(arg) std::cout << arg << std::endl
-
 struct null_t {};
 extern null_t null; // defined in str.cpp
 
 #define END int main() {run(); return 0;}
+
+
+// print
+
+inline void print(bool val) {
+	std::cout << (val ? "true" : "false") << std::endl;
+}
+
+template <typename T>
+inline void print(T val) {
+	std::cout << val << std::endl;
+}
 
 
 // functions
@@ -77,24 +87,17 @@ extern null_t null; // defined in str.cpp
 #define FUNC_ELEM_HAS_PEREN(arg, dummy_type) FUNC_ELEM_NO_PEREN arg
 
 #define FUNC_ARGS_0(...) )
-//#define FUNC_ARGS_1(arg) T_0 arg)
 #define FUNC_ARGS_1( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))))
 #define FUNC_ARGS_2( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_3( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 #define FUNC_ARGS_4( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_5( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-
-//#define FUNC_ARGS_2( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-//#define FUNC_ARGS_3( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-//#define FUNC_ARGS_4( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-//#define FUNC_ARGS_5( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_6( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_7( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_8( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_9( arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_10(arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_11(arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
-#define FUNC_ARGS_12(arg, ...) CONCAT(T, ARG_COUNT(__VA_ARGS__)) arg, CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_6( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_7( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_8( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_9( arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_10(arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_11(arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
+#define FUNC_ARGS_12(arg, ...) CONCAT(FUNC_ELEM, CHECK_FOR_PEREN(arg))(arg, CONCAT(T, ARG_COUNT(__VA_ARGS__))), CONCAT(FUNC_ARGS, ARG_COUNT(__VA_ARGS__))(__VA_ARGS__)
 
 #define args FUNC_ARGS(
 
