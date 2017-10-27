@@ -49,7 +49,7 @@ inline auto range(int high) {
 struct null_t {};
 extern null_t null; // defined in str.cpp
 
-#define END int main() {run(); return 0;}
+#define END_PROGRAM int main() {run(); return 0;}
 
 
 // print
